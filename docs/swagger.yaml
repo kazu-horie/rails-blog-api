@@ -1,0 +1,163 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Rails Blog API"
+host: "localhost:3000"
+basePath: "/v1"
+tags:
+- name: "article"
+schemes:
+- "http"
+paths:
+  /articles:
+    post:
+      tags:
+      - "article"
+      operationId: "addarticle"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Article"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/ArticleResponse"
+        422:
+          description: "Unprocessable Entity"
+    get:
+      tags:
+      - "article"
+      operationId: "getallarticles"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              $ref: "#/definitions/ArticleResponse"
+  /articles/{articleId}:
+    get:
+      tags:
+      - "article"
+      operationId: "getarticleById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "articleId"
+        in: "path"
+        description: "ID of article to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ArticleResponse"
+    put:
+      tags:
+      - "article"
+      operationId: "updatearticle"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "articleId"
+        in: "path"
+        description: "ID of article to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Article"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ArticleResponse"
+        422:
+          description: "Unprocessable Entity"
+    delete:
+      tags:
+      - "article"
+      operationId: "deletearticle"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "articleId"
+        in: "path"
+        description: "article id to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "No Content"
+      security:
+      - articlestore_auth:
+        - "write:articles"
+        - "read:articles"
+definitions:
+  Article:
+    type: "object"
+    required:
+    - "name"
+    - "description"
+    properties:
+      title:
+        type: "string"
+        example: "よく寝た"
+      description:
+        type: "string"
+        example: "今日は10時間寝ました"
+  ArticleResponse:
+    type: "object"
+    required:
+    - "id"
+    - "name"
+    - "description"
+    - "created_at"
+    - "updated_at"
+    properties:
+      id:
+        type: "integer"
+        example: 1
+      title:
+        type: "string"
+        example: "よく寝た"
+      description:
+        type: "string"
+        example: "今日は10時間寝ました"
+      created_at:
+        type: "string"
+        example: "2019-12-18T20:39:16.609Z"
+      updated_at:
+        type: "string"
+        example: "2019-12-18T20:39:16.609Z"
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
