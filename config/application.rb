@@ -36,7 +36,7 @@ module RailsBlogApi
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins 'http://localhost:9004', 'https://editor.swagger.io/'
+        origins '*'
 
         resource '*',
           :headers => :any,

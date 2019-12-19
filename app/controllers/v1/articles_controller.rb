@@ -3,13 +3,13 @@ module V1
     def index
       @articles = Article.all
 
-      render json: @articles
+      render json: @articles unless fresh_when(etag: @articles)
     end
 
     def show
       @article = Article.find(params[:id])
 
-      render json: @article
+      render json: @article unless fresh_when(etag: @article)
     end
 
     def new
