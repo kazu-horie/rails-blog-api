@@ -3,13 +3,13 @@ module V1
     def index
       @articles = Article.all
 
-      render json: @articles unless fresh_when(etag: @articles)
+      render(json: @articles) unless fresh_when(etag: @articles)
     end
 
     def show
       @article = Article.find(params[:id])
 
-      render json: @article unless fresh_when(etag: @article)
+      render(json: @article) unless fresh_when(etag: @article)
     end
 
     def new
@@ -20,25 +20,25 @@ module V1
       @article = Article.new(article_params)
 
       if @article.save
-        render status: :created, json: @article
+        render(status: :created, json: @article)
       else
-        render status: :unprocessable_entity
+        head(:unprocessable_entity)
       end
     end
 
     def edit
       @article = Article.find(params[:id])
 
-      render json: @article
+      render(json: @article)
     end
 
     def update
       @article = Article.find(params[:id])
 
       if @article.update(article_params)
-        render json: @article
+        render(json: @article)
       else
-        render status: :unprocessable_entity
+        head(:unprocessable_entity)
       end
     end
 
@@ -46,7 +46,7 @@ module V1
       @article = Article.find(params[:id])
       @article.destroy
 
-      render status: :no_content
+      head(:no_content)
     end
 
     private

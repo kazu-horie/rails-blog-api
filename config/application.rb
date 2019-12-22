@@ -40,7 +40,7 @@ module RailsBlogApi
 
         resource '*',
           :headers => :any,
-          :methods => [:get, :post, :put, :delete, :options]
+          :methods => [:get, :post, :patch, :delete, :options]
       end
     end
   end

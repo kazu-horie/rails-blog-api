@@ -64,7 +64,7 @@ paths:
           description: "OK"
           schema:
             $ref: "#/definitions/ArticleResponse"
-    put:
+    patch:
       tags:
       - "article"
       operationId: "updatearticle"
@@ -107,10 +107,6 @@ paths:
       responses:
         204:
           description: "No Content"
-      security:
-      - articlestore_auth:
-        - "write:articles"
-        - "read:articles"
 definitions:
   Article:
     type: "object"
