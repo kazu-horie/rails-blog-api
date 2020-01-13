@@ -26,7 +26,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
       }
       post(
         v1_articles_url,
-        params: { article: article_params }
+        params: article_params
       )
     end
 
@@ -50,11 +50,9 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
 
     put(
       v1_article_url(@article),
-      params: {
-        article: { 
-          title:       new_title,
-          description: new_description
-        }
+      params: { 
+        title:       new_title,
+        description: new_description
       }
     )
 

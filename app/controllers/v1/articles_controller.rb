@@ -12,10 +12,6 @@ module V1
       render(json: @article) unless fresh_when(etag: @article)
     end
 
-    def new
-      @article = Article.new
-    end
-
     def create
       @article = Article.new(article_params)
 
@@ -24,12 +20,6 @@ module V1
       else
         head(:unprocessable_entity)
       end
-    end
-
-    def edit
-      @article = Article.find(params[:id])
-
-      render(json: @article)
     end
 
     def update
@@ -52,7 +42,7 @@ module V1
     private
 
     def article_params
-      params.require(:article).permit(:title, :description)
+      params.permit(:title, :description)
     end
   end
 end
